@@ -1,7 +1,5 @@
 'use strict'
 
-//const { merge } = require("@11ty/eleventy/src/TemplateData");
-
 // No cambies los nombres de las funciones.
 
 function quickSort(array) {
