@@ -16,7 +16,12 @@ const {
 
 var countArray = function(array) {
     // Tu código aca:
-    
+    let result  = 0;
+    let arr = array.flat(Infinity);
+    for(let i = 0; i<arr.length; i++){
+        result += arr[i];
+    }
+    return result;
 }
 
 
@@ -37,9 +42,22 @@ var countArray = function(array) {
 // dentro de a tenemos 3 propiedades mas, luego a3 tiene otras 3 y por ultimo c tiene una extra.
 // Propiedades: a, a1, a2, a3, f, a, c, o, b, c --> 10 en total
 
-var countProps = function(obj) {
+var countProps = function(obj, coun = 0){
     // Tu código aca:
-
+    let contador = coun;
+    let arr = Object.values(obj);
+    
+    for(i=0; i < arr.length; i++){
+      contador++
+        if(typeof arr[i] == 'object' && !Array.isArray(arr[i])){
+            contador++
+            let qaz = Object.values(arr[i]);
+            if(qaz.length > 1){
+                return countProps(arr[i], contador);
+            }  
+        }
+    }    
+    return contador;
 }
 
 
@@ -49,10 +67,21 @@ var countProps = function(obj) {
 // Ejemplo 1:
 //    Suponiendo que la lista actual es: Head --> [1] --> ['2'] --> [false] --> ['Franco']
 //    lista.changeNotNumbers();
-//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kirikocho] y la función debería haber devuelto el valor 1
+//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kirikocho'] y la función debería haber devuelto el valor 1
 
 LinkedList.prototype.changeNotNumbers = function(){
     // Tu código aca:
+    let current = this.head;
+    let count = 0;
+    while(current){
+
+        if(isNaN(current.value)){
+            count++;
+            current.value = "Kiricocho";
+        }
+        current = current.next;
+    }
+    return count;
 
 }
 
@@ -67,6 +96,16 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
+  let left = queueOne.array;
+  let rigth = queueTwo.array;
+  let array = [];
+
+  array = left.concat(rigth);
+  array.sort((a,b)=>a-b);
+
+  newQueue = new Queue();
+  newQueue.array = array;
+  return newQueue;
 
 }
 
@@ -83,13 +122,32 @@ var mergeQueues = function(queueOne, queueTwo) {
 var closureMult = function(multiplier) {
     // Tu código aca:
 
+    return function sum(num){
+        return num * multiplier;
+    }
+
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
+
+
+BinarySearchTree.prototype.depthFirstForEach = function(cb){
+
+        //agrea root primero
+        cb(this.value);
+        if(this.left !== null) this.left.depthFirstForEach(cb);
+        if(this.right !== null) this.right.depthFirstForEach(cb);
+
+}
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
-
+    let suma = 0;
+    function sumaa(value){
+        suma = suma + value;
+    }
+    this.depthFirstForEach(sumaa);
+    return suma;
 }
 
 module.exports = {
